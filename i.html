@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agency — Hero</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ── Stars ── */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: twinkle 3s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0.2; }
+      100% { opacity: 0.9; }
+    }
+
+    /* ── Planet Glow ── */
+    .planet-glow {
+      position: absolute;
+      bottom: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center bottom,
+        rgba(245, 166, 35, 0.5) 0%,
+        rgba(212, 135, 10, 0.25) 30%,
+        rgba(200, 120, 0, 0.08) 55%,
+        transparent 75%
+      );
+      filter: blur(40px);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ── Watermark ── */
+    .watermark {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 140px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.03);
+      letter-spacing: 12px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 1;
+      user-select: none;
+    }
+
+    /* ── Nav ── */
+    .nav-link {
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+      font-size: 15px;
+      font-weight: 500;
+    }
+    .nav-link:hover { color: #fff; }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 18px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 500;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.7);
+      backdrop-filter: blur(4px);
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      display: inline-block;
+    }
+
+    /* ── Hover Glow for Headline ── */
+.hover-glow {
+  display: inline-block;
+  position: relative;
+  background: linear-gradient(90deg, #fff 0%, #fff 40%, #F5A623 40%, #F5A623 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-position: 0 0;
+  transition: background-position 0.6s ease, filter 0.4s ease;
+  cursor: default;
+}
+.hover-glow:hover {
+  background-position: 100% 0;
+  filter: drop-shadow(0 0 20px rgba(245,166,35,0.4));
+}
+.hover-glow::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: rgba(245,166,35,0);
+  filter: blur(8px);
+  border-radius: 4px;
+  transition: background 0.6s ease;
+}
+.hover-glow:hover::after {
+  background: rgba(245,166,35,0.2);
+}
+
+
+    /* ── CTA button ── */
+    .btn-gold {
+      background: linear-gradient(135deg, #F5A623, #D4870A);
+      color: #000;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(245,166,35,0.3);
+    }
+    .btn-gold .avatar-icon {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+    }
+
+    /* ── Responsive ── */
+   
+/* ── Responsive ── */
+/* ── Two-Panel Login Page ── */
+.login-overlay {
+  position: fixed;
+  inset: 0;
+
+
+  z-index: 999;
+  background: #0D0D0D;
+
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  overflow-y: auto;
+}
+.login-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.login-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+.login-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+}
+.login-form-wrap {
+  width: 100%;
+  max-width: 440px;
+
+
+
+
+}
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+.login-logo-icon {
+  width: 42px; height: 42px;
+  background: linear-gradient(135deg, #F5A623, #EA580C);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 22px;
+  color: #000;
+}
+.login-logo-text {
+  font-size: 20px;
+
+  font-weight: 800;
+  color: #fff;
+
+}
+.login-logo-text span {
+  color: #F5A623;
+
+
+
+}
+.login-heading {
+  font-size: 40px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.15;
+}
+.login-sub {
+  color: rgba(255,255,255,0.5);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 36px;
+}
+.login-field {
+  margin-bottom: 20px;
+}
+.login-field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 6px;
+}
+.login-field input {
+  width: 100%;
+  padding: 14px 16px;
+  background: #1a1a1a;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.login-field input:focus {
+  border-color: #F5A623;
+  box-shadow: 0 0 0 3px rgba(245,166,35,0.1);
+}
+.login-field input::placeholder {
+  color: rgba(255,255,255,0.2);
+}
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 9999px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #F5A623, #EA580C);
+  color: #000;
+  transition: all 0.3s;
+  margin-top: 8px;
+}
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(245,166,35,0.35);
+}
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 28px 0;
+  color: rgba(255,255,255,0.2);
+  font-size: 13px;
+}
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+}
+.login-social {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+.login-social-btn {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.login-social-btn:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.2);
+}
+.login-bottom {
+  text-align: center;
+  margin-top: 28px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.35);
+}
+.login-bottom a {
+  color: #F5A623;
+  text-decoration: none;
+  font-weight: 600;
+}
+.login-bottom a:hover {
+  text-decoration: underline;
+}
+.login-close {
+  position: fixed;
+  top: 20px; right: 24px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.4);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+.login-close:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+/* ── Right Panel ── */
+.login-right {
+  background: #0D0D0D;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 48px;
+  overflow: hidden;
+}
+.login-right-glow {
+  position: absolute;
+  bottom: -80px;
+  right: -80px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(120,60,0,0.4) 0%, transparent 70%);
+  pointer-events: none;
+}
+.login-card {
+  position: relative;
+  z-index: 2;
+  max-width: 420px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 28px;
+}
+.login-card-badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.login-card-badge {
+  padding: 4px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  background: rgba(0,0,0,0.5);
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.login-card h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 14px;
+}
+.login-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.5);
+}
+.login-card p strong {
+  color: #F5A623;
+  font-weight: 600;
+}
+
+/* ── Pricing Overlay ── */
+.pricing-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #0D0D0D;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  overflow-y: auto;
+}
+.pricing-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.pricing-close {
+  position: fixed;
+  top: 20px; right: 24px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.4);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+.pricing-close:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+.pricing-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 100px 24px 80px;
+  text-align: center;
+}
+.pricing-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 24px;
+}
+.pricing-heading {
+  font-size: 40px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 14px;
+  line-height: 1.15;
+}
+.pricing-subtext {
+  max-width: 640px;
+  margin: 0 auto 56px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.5);
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.pricing-card {
+  background: #1C1C1C;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 36px 28px;
+  text-align: left;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.pricing-card-featured {
+  border: 2px solid #F5A623;
+  transform: scale(1.05);
+  background: #1C1C1C;
+  z-index: 2;
+}
+.pricing-card-featured:hover {
+  transform: scale(1.05) translateY(-4px);
+}
+.pricing-featured-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #F5A623;
+  color: #000;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 20px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+.pricing-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.pricing-card-price {
+  margin-bottom: 12px;
+}
+.price-num {
+  font-size: 52px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.price-period {
+  font-size: 15px;
+  color: rgba(255,255,255,0.4);
+  margin-left: 4px;
+}
+.pricing-card-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+.pricing-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.pricing-features li {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pricing-features .check {
+  color: #F5A623;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.pricing-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 9999px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s;
+}
+.pricing-btn-primary {
+  background: linear-gradient(135deg, #F5A623, #D4870A);
+  color: #000;
+}
+.pricing-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(245,166,35,0.3);
+}
+.pricing-btn-outline {
+  background: transparent;
+  color: #F5A623;
+  border: 2px solid #F5A623;
+}
+.pricing-btn-outline:hover {
+  background: rgba(245,166,35,0.1);
+  transform: translateY(-2px);
+}
+.pricing-bottom-text {
+  margin-top: 48px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+}
+.pricing-bottom-text a {
+  color: #F5A623;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+
+@media (max-width: 768px) {
+  .login-grid {
+    grid-template-columns: 1fr;
+  }
+  .login-right {
+    display: none;
+  }
+  .login-close {
+    top: 12px; right: 12px;
+  }
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .pricing-card-featured {
+    transform: scale(1);
+  }
+  .pricing-card-featured:hover {
+    transform: translateY(-4px);
+  }
+  .pricing-heading {
+    font-size: 32px;
+  }
+  .pricing-close {
+    top: 12px; right: 12px;
+  }
+
+}
+
+
+/* ── Verify Widget Animations ── */
+@keyframes pulse-ring {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+@keyframes scan-line {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes orbit-dot {
+  0%, 100% { transform: translate(0, 0); opacity: 0.6; }
+  25% { transform: translate(12px, -18px); opacity: 1; }
+  50% { transform: translate(-8px, -30px); opacity: 0.4; }
+  75% { transform: translate(-20px, -10px); opacity: 0.8; }
+}
+.verify-widget {
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+  position: relative;
+}
+.verify-upload-zone {
+  width: 100%;
+  height: 150px;
+  border: 2px dashed rgba(245,166,35,0.4);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, background 0.3s;
+  cursor: pointer;
+}
+.verify-upload-zone:hover {
+  border-color: #F5A623;
+  background: rgba(245,166,35,0.06);
+}
+.scan-line {
+  position: absolute;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5A623, transparent);
+  box-shadow: 0 0 12px #F5A623;
+  animation: scan-line 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+.verify-upload-icon {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(245,166,35,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #F5A623;
+  animation: float 2s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+.verify-upload-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+.verify-upload-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  position: relative;
+  z-index: 1;
+}
+.verify-btn-wrap {
+  position: relative;
+  display: inline-flex;
+  margin: 24px auto 0;
+  width: 100%;
+  justify-content: center;
+}
+.verify-btn {
+  position: relative;
+  z-index: 2;
+  width: 280px;
+  height: 64px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #F5A623, #EA580C);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.verify-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(245,166,35,0.5);
+}
+.verify-btn .shield {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+.pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 280px;
+  height: 64px;
+  border-radius: 9999px;
+  border: 2px solid #F5A623;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0;
+  pointer-events: none;
+}
+.pulse-ring:nth-child(2) {
+  animation: pulse-ring 2.5s ease-out infinite;
+}
+.pulse-ring:nth-child(3) {
+  animation: pulse-ring 2.5s ease-out 0.8s infinite;
+}
+.verify-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  margin-top: 20px;
+  animation: float 3s ease-in-out infinite;
+}
+.verify-badge .green-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.verify-stats {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  justify-content: center;
+}
+.verify-stat {
+  padding: 8px 14px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  opacity: 0;
+  animation: fade-in-up 0.6s ease forwards;
+}
+.verify-stat:nth-child(1) { animation-delay: 0.1s; }
+.verify-stat:nth-child(2) { animation-delay: 0.3s; }
+.verify-stat:nth-child(3) { animation-delay: 0.5s; }
+.orbit-dot {
+  position: absolute;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: #F5A623;
+  box-shadow: 0 0 6px #F5A623;
+  pointer-events: none;
+  animation: orbit-dot 5s ease-in-out infinite;
+}
+/* ── Terms Overlay ── */
+.terms-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #0D0D0D;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  overflow-y: auto;
+}
+.terms-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.terms-close {
+  position: fixed;
+  top: 20px; right: 24px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.4);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+.terms-close:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+.terms-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 100px 24px 80px;
+}
+.terms-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.terms-date {
+  font-size: 14px;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 32px;
+}
+.terms-h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #F5A623;
+  margin-top: 32px;
+  margin-bottom: 10px;
+}
+.terms-p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 12px;
+}
+.terms-ul {
+  margin: 0 0 12px 24px;
+  padding: 0;
+  list-style: disc;
+}
+.terms-ul li {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 4px;
+}
+
+    @media (max-width: 1024px) {
+      .hero-headline { font-size: 56px !important; }
+    }
+    @media (max-width: 768px) {
+      .hero-headline { font-size: 40px !important; }
+      .hero-layout { flex-direction: column; text-align: center; }
+      .hero-right { text-align: center; }
+      .hero-badges { justify-content: center; }
+      .nav-links { display: none !important; }
+      .watermark { font-size: 60px; letter-spacing: 6px; bottom: 12px; }
+      .planet-glow { width: 500px; height: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── Stars ─── -->
+  <div class="stars" id="stars"></div>
+
+  <!-- ─── Navbar ─── -->
+  <nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+     <div class="max-w-7xl mx-auto px-2 h-16 flex items-center justify-between">
+      <!-- Logo -->
+  
+           <a href="#" class="flex items-center gap-3 -ml-4">
+         <img src="https://docverify-api.vercel.app/logo.jpeg" alt="DOCVERIFY AI" style="width:36px;height:36px;border-radius:8px;object-fit:cover;">
+      <span class="font-bold text-lg tracking-tight hidden sm:inline" style="color:#fff;">DOCVERIFY <span style="color:#f53c23;">AI</span></span>
+
+
+      </a>
+
+      <!-- Nav Links (center) -->
+      <div class="nav-links flex items-center gap-8">
+        <a href="#how-it-works" class="nav-link"> How it's Work</a>
+       <a href="#" class="nav-link" onclick="document.getElementById('pricing-page').classList.add('open')">Pricing</a>
+
+        <!-- <a href="#" class="nav-link">Pricing</a> -->
+          <a href="#" class="nav-link" onclick="document.getElementById('login-page').classList.add('open')">Sign In</a>
+
+      </div>
+
+      <!-- CTA -->
+       <button class="btn-gold" onclick="window.open('https://chatgpt.com','_blank')">
+
+        <span class="avatar-icon">AI</span>
+        Chat with Alex
+      </button>
+    </div>
+  </nav>
+
+  <!-- ─── Hero ─── -->
+  <section class="relative min-h-screen flex items-center" style="padding-top: 80px;">
+    <!-- Glowing planet arc -->
+    <div class="planet-glow"></div>
+
+    
+
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
+      <div class="hero-layout flex items-start justify-between gap-16">
+
+        <!-- Left -->
+        <div class="flex-1 max-w-2xl">
+
+          <!-- Badges -->
+          <!-- <div class="hero-badges flex items-center gap-3 mb-8">
+            <span class="badge">
+              
+           
+          </div> -->
+
+          <!-- Headline -->
+          <h1 class="hero-headline text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight">
+            <!-- <span>AI-Powered</span><br>
+            <span>Document Authentication</span><br>
+            <span class="headline-glow">and Fraud Detection.</span> -->
+             <span class="hover-glow">AI-Powered</span><br>
+    <span class="hover-glow">Document Authentication</span><br>
+    <span class="hover-glow">and Fraud Detection</span>
+
+          </h1>
+        </div>
+
+        <!-- Right -->
+        <div class="hero-right flex-1 max-w-md pt-4">
+          <!-- <p class="text-base leading-relaxed mb-8" style="color: rgba(255,255,255,0.5);">
+            We craft digital experiences that blend bold creativity with flawless execution. From concept to launch, we turn ambitious ideas into products that stand out.
+          </p> -->
+          <!-- <button class="btn-gold text-base px-8 py-4">
+            <span class="avatar-icon">AI</span>
+            Chat with Alex
+          </button> -->
+  <div class="verify-widget">
+
+
+
+
+        <!-- Floating Dots -->
+        <div class="orbit-dot" style="top:0;left:10%;animation-delay:0s;"></div>
+        <div class="orbit-dot" style="top:5%;right:5%;animation-delay:1s;width:5px;height:5px;"></div>
+        <div class="orbit-dot" style="bottom:30%;left:0;animation-delay:2s;"></div>
+        <div class="orbit-dot" style="bottom:10%;right:8%;animation-delay:0.5s;width:3px;height:3px;"></div>
+        <div class="orbit-dot" style="top:40%;left:-8%;animation-delay:3s;width:5px;height:5px;"></div>
+        <div class="orbit-dot" style="top:60%;right:-5%;animation-delay:1.5s;"></div>
+        <div class="orbit-dot" style="bottom:45%;left:5%;animation-delay:4s;width:3px;height:3px;"></div>
+        <div class="orbit-dot" style="top:20%;right:10%;animation-delay:2.5s;"></div>
+
+        <!-- Upload Zone -->
+        <div class="verify-upload-zone">
+          <div class="scan-line"></div>
+          <div class="verify-upload-icon">&#8593;</div>
+          <div class="verify-upload-text">Drop your document here</div>
+          <div class="verify-upload-sub">PDF · PNG · JPG · TIFF</div>
+        </div>
+
+        <!-- Verify Button -->
+        <div class="verify-btn-wrap">
+          <div class="pulse-ring"></div>
+          <div class="pulse-ring"></div>
+          <!-- <button class="verify-btn" onclick="document.getElementById('pricing-page').classList.add('open')"> -->
+            <button class="verify-btn" onclick="document.getElementById('file-upload-input').click()">
+
+            <span class="shield">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            </span>
+            Verify Document
+          </button>
+        </div>
+
+        <!-- Badge -->
+        <div class="verify-badge">
+          <span class="green-dot"></span>
+          256-bit Encrypted · Blockchain Verified
+        </div>
+
+        <!-- Stats -->
+        <div class="verify-stats">
+          <span class="verify-stat">&#128269; 50K+ Docs Verified</span>
+          <span class="verify-stat">&#9889; 2s Avg Speed</span>
+          <span class="verify-stat">&#128737; 99.9% Accuracy</span>
+        </div>
+
+      </div>
+    </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+<!-- ─── How It Works ─── -->
+<section id="how-it-works" style="padding:80px 24px; background:#0a0f1a; border-top:1px solid rgba(255,255,255,0.04);">
+  <div style="max-width:900px; margin:0 auto;">
+    <h2 style="font-size:36px; font-weight:800; text-align:center; margin-bottom:8px;">How <span style="color:#F5A623;">DOCVERIFY AI</span> Works</h2>
+    <p style="color:rgba(255,255,255,0.5); text-align:center; max-width:680px; margin:0 auto 56px; font-size:16px; line-height:1.7;">
+      An advanced document verification platform designed to detect forged, manipulated, or suspicious documents using Artificial Intelligence and Digital Forensics.
+    </p>
+
+    <!-- Step 1 -->
+    <div style="margin-bottom:56px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+        <span style="background:#F5A623; color:#000; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px; flex-shrink:0;">1</span>
+        <h3 style="font-size:24px; font-weight:700;">Upload Your Document</h3>
+      </div>
+      <p style="color:rgba(255,255,255,0.55); line-height:1.7; margin-left:56px;">Users can upload documents in PDF, JPG, PNG, TIFF, or other supported formats. The system securely processes each file and prepares it for forensic analysis.</p>
+    </div>
+
+    <!-- Step 2 -->
+    <div style="margin-bottom:56px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <span style="background:#F5A623; color:#000; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px; flex-shrink:0;">2</span>
+        <h3 style="font-size:24px; font-weight:700;">AI-Powered Multi-Layer Verification</h3>
+      </div>
+      <div style="margin-left:56px; display:grid; gap:24px;">
+
+        <div style="background:#111827; border-radius:12px; padding:24px; border:1px solid rgba(255,255,255,0.05);">
+          <h4 style="font-weight:700; font-size:18px; margin-bottom:8px; color:#F5A623;">Metadata Verification</h4>
+          <p style="color:rgba(255,255,255,0.5); font-size:14px; line-height:1.7;">The system extracts document metadata and checks creation and modification dates, author and software information, missing or altered metadata, and suspicious editing history.</p>
+        </div>
+
+        <div style="background:#111827; border-radius:12px; padding:24px; border:1px solid rgba(255,255,255,0.05);">
+          <h4 style="font-weight:700; font-size:18px; margin-bottom:8px; color:#F5A623;">OCR Content Analysis</h4>
+          <p style="color:rgba(255,255,255,0.5); font-size:14px; line-height:1.7;">Using Optical Character Recognition (OCR), DOCVERIFY AI extracts all text from the document, detects text alterations and overlays, identifies inconsistent fonts and formatting, and checks content integrity across pages.</p>
+        </div>
+
+        <div style="background:#111827; border-radius:12px; padding:24px; border:1px solid rgba(255,255,255,0.05);">
+          <h4 style="font-weight:700; font-size:18px; margin-bottom:8px; color:#F5A623;">QR Code Validation</h4>
+          <p style="color:rgba(255,255,255,0.5); font-size:14px; line-height:1.7;">If a document contains QR codes, the platform decodes embedded information, validates URLs and encoded data, detects damaged or manipulated QR codes, and verifies placement consistency.</p>
+        </div>
+
+        <div style="background:#111827; border-radius:12px; padding:24px; border:1px solid rgba(255,255,255,0.05);">
+          <h4 style="font-weight:700; font-size:18px; margin-bottom:8px; color:#F5A623;">Tampering Detection</h4>
+          <p style="color:rgba(255,255,255,0.5); font-size:14px; line-height:1.7;">Advanced Error Level Analysis (ELA) identifies edited regions within images, hidden modifications, copy-move forgeries, compression inconsistencies, and image manipulation patterns.</p>
+        </div>
+
+        <div style="background:#111827; border-radius:12px; padding:24px; border:1px solid rgba(255,255,255,0.05);">
+          <h4 style="font-weight:700; font-size:18px; margin-bottom:8px; color:#F5A623;">Signature &amp; Seal Verification</h4>
+          <p style="color:rgba(255,255,255,0.5); font-size:14px; line-height:1.7;">The platform analyzes handwritten signatures, official stamps and seals, signature positioning, missing or duplicated signatures, and unusual signature characteristics.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div style="margin-bottom:56px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <span style="background:#F5A623; color:#000; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px; flex-shrink:0;">3</span>
+        <h3 style="font-size:24px; font-weight:700;">Authenticity Scoring</h3>
+      </div>
+      <p style="color:rgba(255,255,255,0.55); line-height:1.7; margin-left:56px; margin-bottom:20px;">Results from all verification modules are combined into a comprehensive Authenticity Score ranging from 0 to 100.</p>
+      <div style="margin-left:56px; display:grid; gap:12px;">
+        <div style="background:#111827; border-radius:8px; padding:16px 20px; border-left:4px solid #22c55e;"><strong style="color:#22c55e;">80–100:</strong> <span style="color:rgba(255,255,255,0.6);">Verified Document</span></div>
+        <div style="background:#111827; border-radius:8px; padding:16px 20px; border-left:4px solid #F5A623;"><strong style="color:#F5A623;">50–79:</strong> <span style="color:rgba(255,255,255,0.6);">Suspicious Document</span></div>
+        <div style="background:#111827; border-radius:8px; padding:16px 20px; border-left:4px solid #ef4444;"><strong style="color:#ef4444;">0–49:</strong> <span style="color:rgba(255,255,255,0.6);">Tampered or Potentially Fake Document</span></div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div style="margin-bottom:56px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+        <span style="background:#F5A623; color:#000; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px; flex-shrink:0;">4</span>
+        <h3 style="font-size:24px; font-weight:700;">Fraud Detection Report</h3>
+      </div>
+      <p style="color:rgba(255,255,255,0.55); line-height:1.7; margin-left:56px;">DOCVERIFY AI generates a detailed forensic report containing overall authenticity score, module-wise analysis results, severity-based findings, tampering indicators, signature verification results, QR code validation details, and visual evidence with forensic highlights.</p>
+    </div>
+
+    <!-- Step 5 -->
+    <div style="margin-bottom:56px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+        <span style="background:#F5A623; color:#000; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px; flex-shrink:0;">5</span>
+        <h3 style="font-size:24px; font-weight:700;">Blockchain Verification Certificate</h3>
+      </div>
+      <p style="color:rgba(255,255,255,0.55); line-height:1.7; margin-left:56px;">For every analyzed document, DOCVERIFY AI creates a secure SHA-256 document hash, timestamped verification record, unique verification identifier, and blockchain-based verification certificate. This creates a tamper-resistant proof that the document was analyzed and verified at a specific point in time.</p>
+    </div>
+
+    <!-- Detection Section -->
+    <div style="margin-top:64px; padding-top:48px; border-top:1px solid rgba(255,255,255,0.06);">
+      <h2 style="font-size:28px; font-weight:800; text-align:center; margin-bottom:8px;">How <span style="color:#F5A623;">DOCVERIFY AI</span> Detects Fake Documents</h2>
+      <p style="color:rgba(255,255,255,0.5); text-align:center; max-width:600px; margin:0 auto 36px; font-size:15px;">Fake or manipulated documents often leave digital traces. DOCVERIFY AI identifies these traces by examining:</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:12px;">
+        <div style="background:rgba(245,166,35,0.06); border:1px solid rgba(245,166,35,0.1); border-radius:8px; padding:14px 16px; text-align:center; font-size:14px; color:rgba(255,255,255,0.65);">Altered text and overwritten content</div>
+        <div style="background:rgba(245,166,35,0.06); border:1px solid rgba(245,166,35,0.1); border-radius:8px; padding:14px 16px; text-align:center; font-size:14px; color:rgba(255,255,255,0.65);">Image editing artifacts</div>
+        <div style="background:rgba(245,166,35,0.06); border:1px solid rgba(245,166,35,0.1); border-radius:8px; padding:14px 16px; text-align:center; font-size:14px; color:rgba(255,255,255,0.65);">Inconsistent metadata</div>
+        <div style="background:rgba(245,166,35,0.06); border:1px solid rgba(245,166,35,0.1); border-radius:8px; padding:14px 16px; text-align:center; font-size:14px; color:rgba(255,255,255,0.65);">Forged signatures and stamps</div>
+        <div style="background:rgba(245,166,35,0.06); border:1px solid rgba(245,166,35,0.1); border-radius:8px; padding:14px 16px; text-align:center; font-size:14px; color:rgba(255,255,255,0.65);">Modified QR codes</div>
+        <div style="background:rgba(245,166,35,0.06); border:1px solid rgba(245,166,35,0.1); border-radius:8px; padding:14px 16px; text-align:center; font-size:14px; color:rgba(255,255,255,0.65);">Unusual formatting patterns</div>
+        <div style="background:rgba(245,166,35,0.06); border:1px solid rgba(245,166,35,0.1); border-radius:8px; padding:14px 16px; text-align:center; font-size:14px; color:rgba(255,255,255,0.65);">Copy-paste tampering attempts</div>
+        <div style="background:rgba(245,166,35,0.06); border:1px solid rgba(245,166,35,0.1); border-radius:8px; padding:14px 16px; text-align:center; font-size:14px; color:rgba(255,255,255,0.65);">Hidden image manipulations</div>
+      </div>
+      <p style="color:rgba(255,255,255,0.45); text-align:center; margin-top:28px; font-size:15px; line-height:1.7;">By combining AI analysis, digital forensics, OCR technology, and blockchain verification, DOCVERIFY AI helps organizations, institutions, and individuals identify fraudulent documents with greater confidence and accuracy.</p>
+    </div>
+
+    <!-- Why Choose -->
+    <div style="margin-top:64px; padding:40px; background:linear-gradient(135deg, rgba(245,166,35,0.06), rgba(212,135,10,0.03)); border-radius:16px; border:1px solid rgba(245,166,35,0.1); text-align:center;">
+      <h2 style="font-size:28px; font-weight:800; margin-bottom:24px;">Why Choose <span style="color:#F5A623;">DOCVERIFY AI</span>?</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(170px,1fr)); gap:12px; text-align:center;">
+        <div style="padding:12px; color:rgba(255,255,255,0.7); font-size:14px;">&#10003; AI-Powered Verification</div>
+        <div style="padding:12px; color:rgba(255,255,255,0.7); font-size:14px;">&#10003; Multi-Layer Fraud Detection</div>
+        <div style="padding:12px; color:rgba(255,255,255,0.7); font-size:14px;">&#10003; Real-Time Analysis</div>
+        <div style="padding:12px; color:rgba(255,255,255,0.7); font-size:14px;">&#10003; Blockchain Verification Certificate</div>
+        <div style="padding:12px; color:rgba(255,255,255,0.7); font-size:14px;">&#10003; Detailed Forensic Reports</div>
+        <div style="padding:12px; color:rgba(255,255,255,0.7); font-size:14px;">&#10003; Secure &amp; Privacy-Focused Processing</div>
+        <div style="padding:12px; color:rgba(255,255,255,0.7); font-size:14px;">&#10003; Fast and Accurate Results</div>
+      </div>
+      <p style="color:rgba(255,255,255,0.45); margin-top:24px; font-size:15px;">DOCVERIFY AI helps build trust in digital documents by making authenticity verification simple, secure, and reliable.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ─── Pricing Page ─── -->
+<div class="pricing-overlay" id="pricing-page">
+  <button class="pricing-close" onclick="document.getElementById('pricing-page').classList.remove('open')">&times;</button>
+  <div class="pricing-inner">
+
+    <!-- Pill Badge -->
+    <div class="pricing-badge">🚀 Premium Subscription Plans</div>
+
+    <!-- Heading -->
+    <h2 class="pricing-heading">Choose Your Verification Plan</h2>
+
+    <!-- Subtext -->
+    <p class="pricing-subtext">Protect your organization from forged certificates, tampered invoices and fraudulent documents using AI-powered verification technology.</p>
+
+    <!-- Cards Grid -->
+    <div class="pricing-grid">
+
+      <!-- Card 1 – Starter -->
+      <div class="pricing-card">
+        <h3 class="pricing-card-title">Starter</h3>
+        <div class="pricing-card-price"><span class="price-num">$0</span><span class="price-period">/month</span></div>
+        <p class="pricing-card-desc">Perfect for students and individual users.</p>
+        <ul class="pricing-features">
+          <li><span class="check">&#10003;</span> 10 Document Checks per day</li>
+          <li><span class="check">&#10003;</span> QR Code Validation</li>
+          <li><span class="check">&#10003;</span> Metadata Analysis</li>
+          <li><span class="check">&#10003;</span> Email Support</li>
+          <li><span class="check">&#10003;</span> Basic Reports</li>
+        </ul>
+        <button class="pricing-btn pricing-btn-primary">Get Started</button>
+      </div>
+
+      <!-- Card 2 – Professional (Featured) -->
+      <div class="pricing-card pricing-card-featured">
+        <div class="pricing-featured-badge">Most Popular</div>
+        <h3 class="pricing-card-title">Professional</h3>
+        <div class="pricing-card-price"><span class="price-num">$9</span><span class="price-period">/month</span></div>
+        <p class="pricing-card-desc">Best for startups and institutions.</p>
+        <ul class="pricing-features">
+          <li><span class="check">&#10003;</span> Unlimited Verification</li>
+          <li><span class="check">&#10003;</span> Advanced AI Detection</li>
+          <li><span class="check">&#10003;</span> Forgery Heatmaps</li>
+          <li><span class="check">&#10003;</span> Priority Support</li>
+          <li><span class="check">&#10003;</span> Detailed Analytics</li>
+          <li><span class="check">&#10003;</span> Fraud Risk Score</li>
+        </ul>
+        <button class="pricing-btn pricing-btn-primary">Upgrade Now</button>
+      </div>
+
+      <!-- Card 3 – Enterprise -->
+      <div class="pricing-card">
+        <h3 class="pricing-card-title">Enterprise</h3>
+        <div class="pricing-card-price"><span class="price-num">$15</span><span class="price-period">/month</span></div>
+        <p class="pricing-card-desc">For universities, banks and large organizations.</p>
+        <ul class="pricing-features">
+          <li><span class="check">&#10003;</span> Unlimited Team Access</li>
+          <li><span class="check">&#10003;</span> API Integration</li>
+          <li><span class="check">&#10003;</span> Custom AI Models</li>
+          <li><span class="check">&#10003;</span> Dedicated Manager</li>
+          <li><span class="check">&#10003;</span> Advanced Security</li>
+          <li><span class="check">&#10003;</span> Compliance Dashboard</li>
+        </ul>
+        <button class="pricing-btn pricing-btn-outline">Contact Sales</button>
+      </div>
+
+    </div>
+
+    <!-- Bottom Text -->
+    <p class="pricing-bottom-text">Need a custom solution? <a href="#">Talk to our sales team</a></p>
+
+  </div>
+</div>
+
+<!-- ─── Two-Panel Login Page ─── -->
+<div class="login-overlay" id="login-page">
+
+  <button class="login-close" onclick="document.getElementById('login-page').classList.remove('open')">&times;</button>
+  <div class="login-grid">
+
+
+
+
+    <!-- Left Panel: Form -->
+
+    <div class="login-left">
+      <div class="login-form-wrap">
+        <div class="login-logo">
+          <div class="login-logo-icon">D</div>
+          <span class="login-logo-text">DocVerify<span>AI</span></span>
+        </div>
+        <h1 class="login-heading">Welcome Back!</h1>
+
+        <p class="login-sub">Upload certificates, receipts, and PDFs. Detect possible tampering signals such as metadata mismatches, duplicate QR codes, edited text regions, and inconsistent formatting.</p>
+
+
+
+        <form onsubmit="event.preventDefault(); alert('Sign-in demo — no backend connected.');">
+          <div class="login-field">
+            <label>Email</label>
+            <input type="email" placeholder="your@email.com" required>
+          </div>
+          <div class="login-field">
+            <label>Password</label>
+            <input type="password" placeholder="Enter password" required>
+          </div>
+          <button type="submit" class="login-btn">Sign In</button>
+        </form>
+
+        <div class="login-divider">or continue with</div>
+
+        <div class="login-social">
+          <button class="login-social-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Google
+          </button>
+          <button class="login-social-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58 0-.28-.01-1.04-.02-2.05-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.08-.73.08-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.48.99.11-.77.42-1.3.76-1.6-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.5 11.5 0 016 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22 0 1.61-.01 2.9-.01 3.3 0 .32.22.7.84.58A12 12 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </button>
+          <button class="login-social-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            Microsoft
+          </button>
+        </div>
+
+        <p class="login-bottom">Don't have an account? <a href="#">Sign Up</a></p>
+      </div>
+    </div>
+
+    <!-- Right Panel: Info Card -->
+
+    <div class="login-right">
+      <div class="login-right-glow"></div>
+      <div class="login-card">
+        <div class="login-card-badges">
+          <span class="login-card-badge">AI Verification</span>
+          <span class="login-card-badge">Document Security</span>
+        </div>
+        <h3>Detect document fraud before it becomes a problem.</h3>
+        <p><strong>DocVerifyAI</strong> automatically analyzes certificates, receipts, invoices and PDFs to identify metadata inconsistencies, duplicate QR codes, suspicious edits and formatting anomalies using advanced AI-powered verification.</p>
+      </div>
+    </div>
+</div>
+</div>
+
+<!-- ─── Terms & Conditions Page ─── -->
+<div class="terms-overlay" id="terms-page">
+  <button class="terms-close" onclick="document.getElementById('terms-page').classList.remove('open')">&times;</button>
+  <div class="terms-inner">
+    <h1 class="terms-title">Terms &amp; Conditions</h1>
+    <p class="terms-date">Last Updated: June 2026</p>
+    <p class="terms-p">Welcome to DocVerify AI. By accessing or using our platform, you agree to comply with and be bound by these Terms &amp; Conditions. If you do not agree, please do not use our services.</p>
+
+    <h2 class="terms-h2">1. Acceptance of Terms</h2>
+    <p class="terms-p">By using DocVerify AI, you acknowledge that you have read, understood, and accepted these Terms &amp; Conditions and our Privacy Policy.</p>
+
+    <h2 class="terms-h2">2. Service Description</h2>
+    <p class="terms-p">DocVerify AI provides AI-powered document authenticity analysis and verification services. The platform analyzes uploaded documents and generates authenticity scores, forensic findings, and verification reports.</p>
+
+    <h2 class="terms-h2">3. User Responsibilities</h2>
+    <p class="terms-p">You agree to:</p>
+    <ul class="terms-ul">
+      <li>Upload only documents that you own or have legal authorization to verify.</li>
+      <li>Provide accurate information when using the platform.</li>
+      <li>Use the service only for lawful purposes.</li>
+      <li>Not attempt to reverse engineer, disrupt, or misuse the platform.</li>
+    </ul>
+
+    <h2 class="terms-h2">4. Prohibited Uses</h2>
+    <p class="terms-p">Users may not:</p>
+    <ul class="terms-ul">
+      <li>Upload malicious, illegal, or copyrighted content without authorization.</li>
+      <li>Use the platform for fraud, identity theft, or unlawful activities.</li>
+      <li>Attempt to gain unauthorized access to system resources or data.</li>
+    </ul>
+
+    <h2 class="terms-h2">5. AI Analysis Disclaimer</h2>
+    <p class="terms-p">Verification results are generated using artificial intelligence and forensic analysis techniques. Results are provided for informational purposes only. DocVerify AI does not guarantee 100% accuracy. Users should seek professional verification for legal, financial, or regulatory decisions.</p>
+
+    <h2 class="terms-h2">6. Data Processing</h2>
+    <p class="terms-p">Uploaded documents are processed solely to provide verification services. Documents may be stored temporarily for analysis purposes. We implement reasonable security measures to protect user data.</p>
+
+    <h2 class="terms-h2">7. Intellectual Property</h2>
+    <p class="terms-p">All platform content, software, algorithms, logos, and trademarks belong to DocVerify AI and are protected by applicable intellectual property laws.</p>
+
+    <h2 class="terms-h2">8. Limitation of Liability</h2>
+    <p class="terms-p">DocVerify AI shall not be liable for:</p>
+    <ul class="terms-ul">
+      <li>Any indirect, incidental, or consequential damages.</li>
+      <li>Decisions made based on AI-generated authenticity reports.</li>
+      <li>Loss of data resulting from technical failures beyond our control.</li>
+    </ul>
+
+    <h2 class="terms-h2">9. Account Suspension</h2>
+    <p class="terms-p">We reserve the right to suspend or terminate accounts that violate these Terms &amp; Conditions or engage in suspicious activities.</p>
+  </div>
+</div>
+
+
+  <!-- ─── Script: Stars ─── -->
+   <!-- ─── Footer ─── -->
+<footer style="border-top:1px solid rgba(255,255,255,0.06); padding:32px 24px; text-align:center;">
+  <div style="display:flex; justify-content:center; align-items:center; gap:32px; flex-wrap:wrap;">
+       <a href="#" style="color:rgba(255,255,255,0.5); transition:color 0.2s; display:flex; align-items:center; gap:6px; font-size:14px; text-decoration:none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+
+      Email
+    </a>
+    <a href="#" onclick="document.getElementById('login-page').classList.add('open')" style="color:rgba(255,255,255,0.5); transition:color 0.2s; display:flex; align-items:center; gap:6px; font-size:14px; text-decoration:none; cursor:pointer;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+
+
+
+
+
+      Sign In
+    </a>
+    <a href="#" style="color:rgba(255,255,255,0.5); transition:color 0.2s; display:flex; align-items:center; gap:6px; font-size:14px; text-decoration:none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      About Us
+    </a>
+      <a href="#" onclick="document.getElementById('terms-page').classList.add('open')" style="color:rgba(255,255,255,0.5); transition:color 0.2s; display:flex; align-items:center; gap:6px; font-size:14px; text-decoration:none; cursor:pointer;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Terms &amp; Conditions
+    </a>
+
+  </div>
+  <p style="color:rgba(255,255,255,0.2); font-size:13px; margin-top:20px;">&copy; 2026 DOCVERIFY AI. All rights reserved.</p>
+</footer>
+
+
+  <script>
+    (function() {
+      const container = document.getElementById('stars');
+      const count = 180;
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = star.style.height = (Math.random() * 2.5 + 1) + 'px';
+        star.style.animationDelay = (Math.random() * 5) + 's';
+        star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        container.appendChild(star);
+      }
+    })();
+  </script>
+
+</body>
+</html>
